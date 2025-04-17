@@ -7,41 +7,35 @@ export default function StarsPage() {
   const [selectedLetter, setSelectedLetter] = useState<number | null>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
-  // 從 localStorage 加載信件
-  useEffect(() => {
-    loadLetters()
-  }, [])
-
-  const loadLetters = () => {
-    try {
-      if (typeof window !== 'undefined') {
-        const savedLetters = localStorage.getItem('starLetters')
-        if (savedLetters) {
-          setLetters(JSON.parse(savedLetters))
+    const loadLetters = () => {
+      try {  // <--- 修正這裡的結構
+        if (typeof window !== 'undefined') {
+          const savedLetters = localStorage.getItem('starLetters')
+          if (savedLetters) {
+            setLetters(JSON.parse(savedLetters))
+          }
         }
+      } catch {  // <--- 保持完整的 catch 結構
+        alert('無法載入信件，請檢查儲存空間')
       }
-    } catch (error) {
-      alert('無法載入信件，請檢查儲存空間')
     }
-  }
-
-  const handleDelete = (id: number) => {
-    try {
-      const confirmDelete = window.confirm('確定要永久刪除這顆星星嗎？')
-      if (!confirmDelete) return
-
-      const updatedLetters = letters.filter(letter => letter.id !== id)
-      setLetters(updatedLetters)
-      localStorage.setItem('starLetters', JSON.stringify(updatedLetters))
-      
-      // 如果刪除的是當前查看的信件，關閉彈窗
-      if (selectedLetter === id) {
-        setSelectedLetter(null)
+  
+    const handleDelete = (id: number) => {
+      try {  // <--- 修正這裡的結構
+        const confirmDelete = window.confirm('確定要永久刪除這顆星星嗎？')
+        if (!confirmDelete) return
+  
+        const updatedLetters = letters.filter(letter => letter.id !== id)
+        setLetters(updatedLetters)
+        localStorage.setItem('starLetters', JSON.stringify(updatedLetters))
+        
+        if (selectedLetter === id) {
+          setSelectedLetter(null)
+        }
+      } catch {  // <--- 保持完整的 catch 結構
+        alert('刪除失敗，請稍後再試')
       }
-    } catch (error) {
-      alert('刪除失敗，請稍後再試')
     }
-  }
 
   return (
     <div className="min-h-screen text-white p-20">

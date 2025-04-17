@@ -12,7 +12,6 @@ export default function WritePage() {
   const [isFlipped, setIsFlipped] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const [showCardPopup, setShowCardPopup] = useState(false) // 控制是否顯示彈出卡片
-  const [savedLetters, setSavedLetters] = useState<any[]>([]) // 用來存放已儲存的信件
   const cardRef = useRef<HTMLDivElement>(null)
 
   // 日期顯示邏輯
@@ -95,7 +94,6 @@ export default function WritePage() {
         const savedLettersFromStorage = JSON.parse(localStorage.getItem('starLetters') || '[]')
         const updatedLetters = [...savedLettersFromStorage, newLetter]
         localStorage.setItem('starLetters', JSON.stringify(updatedLetters))
-        setSavedLetters(updatedLetters) // 更新狀態以顯示新增的信件
       }
 
       // 清空輸入框
