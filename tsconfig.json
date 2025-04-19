@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "types": ["next"],      
-    "lib": [
-      "dom",
-      "es2015"
-    ],
+    "target": "esnext",
+    "types": ["next"],
+    "lib": ["dom", "es2015"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -25,11 +22,10 @@
     ]
   },
   "include": [
+    "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
