@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 
 export default function StarsPage() {
@@ -7,18 +7,6 @@ export default function StarsPage() {
   const [selectedLetter, setSelectedLetter] = useState<number | null>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
-    const loadLetters = () => {
-      try {  // <--- 修正這裡的結構
-        if (typeof window !== 'undefined') {
-          const savedLetters = localStorage.getItem('starLetters')
-          if (savedLetters) {
-            setLetters(JSON.parse(savedLetters))
-          }
-        }
-      } catch {  // <--- 保持完整的 catch 結構
-        alert('無法載入信件，請檢查儲存空間')
-      }
-    }
   
     const handleDelete = (id: number) => {
       try {  // <--- 修正這裡的結構

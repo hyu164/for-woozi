@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image' // 引入 Image 元件
 
 export default function WritePage() {
   const [newTitle, setNewTitle] = useState('')
@@ -104,72 +105,100 @@ export default function WritePage() {
     }
   }
 
-return (
-<div className="min-h-screen text-white p-20 relative">
-{/* 卡片彈出層 */}
-{showCardPopup && (
-<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCardPopup(false)}>
-<div ref={cardRef} className="relative w-96 h-128 bg-white rounded-xl shadow-2xl" onClick={(e) => e.stopPropagation()}>
-{randomCard && (
-<img src={randomCard} alt="抽到的卡片" className="w-full h-full object-cover rounded-xl"/>
-)}
-</div>
-</div>
-)}
+  return (
+    <div className="min-h-screen text-white p-20 relative">
+      {/* 卡片彈出層 */}
+      {showCardPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCardPopup(false)}>
+          <div ref={cardRef} className="relative w-96 h-128 bg-white rounded-xl shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            {randomCard && (
+              <Image 
+                src={randomCard} 
+                alt="抽到的卡片" 
+                width={384} 
+                height={512} 
+                className="w-full h-full object-cover rounded-xl"
+              />
+            )}
+          </div>
+        </div>
+      )}
 
-{/* 返回按鈕 */}
-<div className="absolute left-4 top-4">
-<Link href="/" className="font-serif bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors">
-← Back</Link>
-</div>
+      {/* 返回按鈕 */}
+      <div className="absolute left-4 top-4">
+        <Link href="/" className="font-serif bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors">
+          ← Back
+        </Link>
+      </div>
 
-{/* 日期與倒數區塊 */}
-<div className="mb-6 space-y-2">
-<h2 className="text-xl font-serif bg-white/10 p-3 rounded-lg inline-block">
-📅 今天是：{currentDate}</h2>
-<h2 className="text-xl font-serif bg-white/10 p-3 rounded-lg inline-block ml-4">
-⏳ 倒數：{countdown}</h2>
-</div>
+      {/* 日期與倒數區塊 */}
+      <div className="mb-6 space-y-2">
+        <h2 className="text-xl font-serif bg-white/10 p-3 rounded-lg inline-block">
+          📅 今天是：{currentDate}</h2>
+        <h2 className="text-xl font-serif bg-white/10 p-3 rounded-lg inline-block ml-4">
+          ⏳ 倒數：{countdown}</h2>
+      </div>
 
-{/* 寫信區塊 */}
-<h1 className="text-3xl font-serif mb-4">寫在這裡</h1>
+      {/* 寫信區塊 */}
+      <h1 className="text-3xl font-serif mb-4">寫在這裡</h1>
 
-<input type="text" placeholder="Title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} 
-className="w-full font-serif p-2 mb-2 bg-gray-800 text-white rounded"/>
+      <input 
+        type="text" 
+        placeholder="Title" 
+        value={newTitle} 
+        onChange={(e) => setNewTitle(e.target.value)} 
+        className="w-full font-serif p-2 mb-2 bg-gray-800 text-white rounded"
+      />
 
-<textarea placeholder="write down something..." value={newContent} onChange={(e) => setNewContent(e.target.value)} 
-className="w-full font-serif p-2 mb-2 bg-gray-800 text-white rounded h-32"/>
+      <textarea 
+        placeholder="write down something..." 
+        value={newContent} 
+        onChange={(e) => setNewContent(e.target.value)} 
+        className="w-full font-serif p-2 mb-2 bg-gray-800 text-white rounded h-32"
+      />
 
-{/* 抽卡按鈕 */}
-<div className="mt-6">
-<div className="relative w-64 h-96 mx-auto perspective-1000">
-<div className={`relative w-full h-full font-serif transition-transform duration-500 transform-style-preserve-3d ${
-isFlipped ? 'rotate-y-180' : ''
-}`}>
-{/* 卡片正面 */}
-<div className="absolute w-full h-full bg-gray-600 rounded-xl backface-hidden flex items-center 
-justify-center text-2xl font-bold shadow-xl">
-寫信後抽
-</div>
+      {/* 抽卡按鈕 */}
+      <div className="mt-6">
+        <div className="relative w-64 h-96 mx-auto perspective-1000">
+          <div className={`relative w-full h-full font-serif transition-transform duration-500 transform-style-preserve-3d ${
+            isFlipped ? 'rotate-y-180' : ''
+          }`}>
+            {/* 卡片正面 */}
+            <div className="absolute w-full h-full bg-gray-600 rounded-xl backface-hidden flex items-center 
+            justify-center text-2xl font-bold shadow-xl">
+              寫信後抽
+            </div>
 
-{/* 卡片背面 */}
-<div className="absolute w-full h-full bg-gray-600 rounded-xl backface-hidden rotate-y-180 transform">{randomCard && (
-<img src={randomCard} alt="抽到的卡片" className="w-full h-full object-cover rounded-xl"/> )}
-</div>
-</div>
-</div>
-<button 
-onClick={addLetterAndDrawCard}
-disabled={isAnimating}
-className={`bg-yellow-500 px-4 py-2 rounded-lg font-serif mt-4 ${
-isAnimating ? 'opacity-50 cursor-not-allowed' : 'opacity-80 hover:opacity-100'
-}`} >
-⭐ 儲存成星星並抽卡</button>
-</div>
+            {/* 卡片背面 */}
+            <div className="absolute w-full h-full bg-gray-600 rounded-xl backface-hidden rotate-y-180 transform">
+              {randomCard && (
+                <Image 
+                  src={randomCard} 
+                  alt="抽到的卡片" 
+                  width={384} 
+                  height={512} 
+                  className="w-full h-full object-cover rounded-xl"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        <button 
+          onClick={addLetterAndDrawCard}
+          disabled={isAnimating}
+          className={`bg-yellow-500 px-4 py-2 rounded-lg font-serif mt-4 ${
+            isAnimating ? 'opacity-50 cursor-not-allowed' : 'opacity-80 hover:opacity-100'
+          }`}
+        >
+          ⭐ 儲存成星星並抽卡
+        </button>
+      </div>
 
-
-{/* 導航到星星頁面的按鈕 */}
-<div className="mt-6">
-<Link href="/stars" className="bg-gray-500 px-4 py-2 rounded-lg text-white 
-font-serif hover:opacity-80 ">查看我的宇宙🌠</Link></div></div>)
+      {/* 導航到星星頁面的按鈕 */}
+      <div className="mt-6">
+        <Link href="/stars" className="bg-gray-500 px-4 py-2 rounded-lg text-white 
+        font-serif hover:opacity-80 ">查看我的宇宙🌠</Link>
+      </div>
+    </div>
+  )
 }

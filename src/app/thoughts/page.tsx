@@ -1,9 +1,8 @@
 'use client'
-export {}  
+export {}
 import { useState } from 'react'
 import Link from 'next/link'
-
-
+import Image from 'next/image' // 引入 Image 元件
 
 export default function WooziThoughtsPage() {
   const [selectedSection, setSelectedSection] = useState<number | null>(null)
@@ -29,16 +28,15 @@ export default function WooziThoughtsPage() {
   return (
     <div className="min-h-screen bg-background text-white py-10 px-4">
       <div className="max-w-4xl mx-auto">
-      <div className="absolute left-4 top-4">
+        <div className="absolute left-4 top-4">
           <Link href="/" className="font-serif bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors">
             ← Back
           </Link>
         </div>
         <header className="text-center mb-10">
           <h1 className="text-4xl font-serif mb-4">
-           僅獻給我的宇宙
+            僅獻給我的宇宙
           </h1>
-        
         </header>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -48,9 +46,11 @@ export default function WooziThoughtsPage() {
               className="bg-gray-800 rounded-lg overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform"
               onClick={() => setSelectedSection(selectedSection === index ? null : index)}
             >
-              <img 
+              <Image 
                 src={section.imageUrl} 
                 alt={section.title} 
+                width={500}  // 設定圖片寬度
+                height={300} // 設定圖片高度
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
@@ -76,19 +76,18 @@ export default function WooziThoughtsPage() {
               <h2 className="text-3xl font-serif mb-4">
                 {thoughtSections[selectedSection].title}
               </h2>
-              <img 
+              <Image 
                 src={thoughtSections[selectedSection].imageUrl} 
                 alt={thoughtSections[selectedSection].title}
+                width={600}  // 設定圖片寬度
+                height={400} // 設定圖片高度
                 className="w-full h-64 object-cover rounded-lg mb-4"
               />
               <p className="text-lg">
                 {thoughtSections[selectedSection].content}
               </p>
-              <main className="flex flex-col items-center ">
-      </main>
             </div>
           </div>
-          
         )}
       </div>
     </div>
