@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import Link from 'next/link'
 
 export default function StarsPage() {
@@ -7,6 +7,11 @@ export default function StarsPage() {
   const [selectedLetter, setSelectedLetter] = useState<number | null>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
+  useEffect(() => {
+    const savedLettersFromStorage = JSON.parse(localStorage.getItem('starLetters') || '[]')
+    setLetters(savedLettersFromStorage)
+    console.log(savedLettersFromStorage)
+  }, [])
   
     const handleDelete = (id: number) => {
       try {  // <--- 修正這裡的結構
